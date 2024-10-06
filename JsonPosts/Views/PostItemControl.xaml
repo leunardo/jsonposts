@@ -1,0 +1,57 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:models="clr-namespace:JsonPosts.Models"
+             xmlns:converters="clr-namespace:JsonPosts.Converters"
+             x:Class="JsonPosts.Views.PostItemControl">
+    <UserControl.Resources>
+        <converters:PostIdConverter x:Key="PostIdConverter"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Button Click="PostItem_Click">
+            <Button.ToolTip>
+                <ToolTip>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock FontWeight="Bold" Grid.Row="0" Grid.Column="0">Title</TextBlock>
+                        <TextBlock FontWeight="Bold" Grid.Row="1" Grid.Column="0" >Body</TextBlock>
+                        <TextBlock FontWeight="Bold" Grid.Row="2" Grid.Column="0">Id</TextBlock>
+                        <TextBlock FontWeight="Bold" Grid.Row="3" Grid.Column="0">User Id</TextBlock>
+
+                        <TextBlock Text="{Binding Title}" FontWeight="Bold" Grid.Row="0" Grid.Column="1" />
+                        <TextBlock Text="{Binding Body}" FontStyle="Italic" Grid.Row="1" Grid.Column="1" />
+                        <TextBlock Text="{Binding Id}" Grid.Row="2" Grid.Column="1" />
+                        <TextBlock Text="{Binding UserId}" Grid.Row="3" Grid.Column="1" />
+                    </Grid>
+                </ToolTip>
+            </Button.ToolTip>
+            <StackPanel>
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{StaticResource PostIdConverter}">
+                            <Binding Path="Id"/>
+                            <Binding Path="UserId"/>
+                            <Binding Path="DataContext.SelectedIdType" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+        </Button>
+    </Border>
+</UserControl>
